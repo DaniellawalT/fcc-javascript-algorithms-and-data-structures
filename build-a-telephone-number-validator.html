@@ -1,0 +1,92 @@
+** start of undefined **
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Number Validator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="app">
+    <input type="text" id="user-input" placeholder="Enter phone number">
+    <br>
+    <button id="check-btn">Check</button>
+    <button id="clear-btn">Clear</button>
+    <div id="results-div"></div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
+
+
+** end of undefined **
+
+** start of undefined **
+
+document.getElementById('check-btn').addEventListener('click', function() {
+        const userInput = document.getElementById('user-input').value.trim();
+        const resultsDiv = document.getElementById('results-div');
+
+        if (!userInput) {
+            alert("Please provide a phone number");
+            return;
+        }
+
+        const validPatterns = [
+            /^1?\s?\(\d{3}\)\s?\d{3}-\d{4}$/, // 1 (555) 555-5555 or (555) 555-5555
+            /^1?\s?\d{3}-\d{3}-\d{4}$/, // 1 555-555-5555 or 555-555-5555
+            /^1?\s?\d{3}\s\d{3}\s\d{4}$/, // 1 555 555 5555 or 555 555 5555
+            /^1?\d{10}$/ // 15555555555 or 5555555555
+        ];
+
+        const isValid = validPatterns.some(pattern => pattern.test(userInput));
+
+        if (isValid) {
+            resultsDiv.textContent = `Valid US number: ${userInput}`;
+        } else {
+            resultsDiv.textContent = `Invalid US number: ${userInput}`;
+        }
+    });
+
+    document.getElementById('clear-btn').addEventListener('click', function() {
+        document.getElementById('results-div').textContent = '';
+        document.getElementById('user-input').value = '';
+    });
+
+** end of undefined **
+
+** start of undefined **
+
+ body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        #app {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            cursor: pointer;
+        }
+        #results-div {
+            margin-top: 10px;
+        }
+
+** end of undefined **
+

@@ -1,0 +1,115 @@
+** start of undefined **
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roman Numeral Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Roman Numeral Converter</h1>
+        <label for="number">Enter a number:</label>
+        <input type="number" id="number" placeholder="Enter a number...">
+        <button id="convert-btn">Convert</button>
+        <p id="output"></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+** end of undefined **
+
+** start of undefined **
+
+document.getElementById('convert-btn').addEventListener('click', function() {
+    const numberInput = document.getElementById('number').value.trim();
+    
+    if (numberInput === '') {
+        document.getElementById('output').textContent = 'Please enter a valid number';
+        return;
+    }
+
+    const number = parseInt(numberInput, 10);
+
+    if (isNaN(number) || number < 1) {
+        document.getElementById('output').textContent = 'Please enter a number greater than or equal to 1';
+        return;
+    }
+
+    if (number >= 4000) {
+        document.getElementById('output').textContent = 'Please enter a number less than or equal to 3999';
+        return;
+    }
+
+    const romanNumeral = convertToRoman(number);
+    document.getElementById('output').textContent = romanNumeral;
+});
+
+function convertToRoman(num) {
+    const romanNumerals = [
+        { value: 1000, numeral: 'M' },
+        { value: 900, numeral: 'CM' },
+        { value: 500, numeral: 'D' },
+        { value: 400, numeral: 'CD' },
+        { value: 100, numeral: 'C' },
+        { value: 90, numeral: 'XC' },
+        { value: 50, numeral: 'L' },
+        { value: 40, numeral: 'XL' },
+        { value: 10, numeral: 'X' },
+        { value: 9, numeral: 'IX' },
+        { value: 5, numeral: 'V' },
+        { value: 4, numeral: 'IV' },
+        { value: 1, numeral: 'I' }
+    ];
+
+    let result = '';
+
+    for (let i = 0; i < romanNumerals.length; i++) {
+        while (num >= romanNumerals[i].value) {
+            result += romanNumerals[i].numeral;
+            num -= romanNumerals[i].value;
+        }
+    }
+
+    return result;
+}
+
+
+** end of undefined **
+
+** start of undefined **
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+}
+
+input[type="number"] {
+    padding: 8px;
+    font-size: 16px;
+    margin-right: 8px;
+    width: 150px;
+}
+
+button {
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+** end of undefined **
+

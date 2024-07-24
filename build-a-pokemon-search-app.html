@@ -1,0 +1,138 @@
+** start of undefined **
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Search App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="app">
+    <label for="search-input">Search Pokémon:</label>
+    <input type="text" id="search-input" placeholder="Enter name or ID" required>
+    <button id="search-button">Search</button>
+    <div id="pokemon-info">
+        <div id="pokemon-name"></div>
+        <div id="pokemon-id"></div>
+        <div id="weight"></div>
+        <div id="height"></div>
+        <div id="types"></div>
+        <div id="hp"></div>
+        <div id="attack"></div>
+        <div id="defense"></div>
+        <div id="special-attack"></div>
+        <div id="special-defense"></div>
+        <div id="speed"></div>
+    </div>
+</div>
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+** end of undefined **
+
+** start of undefined **
+
+document.getElementById('search-button').addEventListener('click', () => {
+  const searchInput = document.getElementById('search-input').value.trim();
+  if (!searchInput) {
+    alert("Please enter a Pokémon name or ID");
+    return;
+  }
+
+  fetch(`https://pokeapi.co/api/v2/pokemon/${searchInput.toLowerCase()}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Pokémon not found');
+      }
+      return response.json();
+    })
+    .then(data => {
+      // Clear previous data
+      document.getElementById('pokemon-name').textContent = '';
+      document.getElementById('pokemon-id').textContent = '';
+      document.getElementById('weight').textContent = '';
+      document.getElementById('height').textContent = '';
+      document.getElementById('types').textContent = '';
+      document.getElementById('hp').textContent = '';
+      document.getElementById('attack').textContent = '';
+      document.getElementById('defense').textContent = '';
+      document.getElementById('special-attack').textContent = '';
+      document.getElementById('special-defense').textContent = '';
+      document.getElementById('speed').textContent = '';
+
+      // Update with new data
+      document.getElementById('pokemon-name').textContent = data.name.toUpperCase();
+      document.getElementById('pokemon-id').textContent = `#${data.id}`;
+      document.getElementById('weight').textContent = `Weight: ${data.weight}`;
+      document.getElementById('height').textContent = `Height: ${data.height}`;
+      document.getElementById('types').innerHTML = data.types.map(type => `<span>${type.type.name.toUpperCase()}</span>`).join(' ');
+      document.getElementById('hp').textContent = data.stats[0].base_stat;
+      document.getElementById('attack').textContent = data.stats[1].base_stat;
+      document.getElementById('defense').textContent = data.stats[2].base_stat;
+      document.getElementById('special-attack').textContent = data.stats[3].base_stat;
+      document.getElementById('special-defense').textContent = data.stats[4].base_stat;
+      document.getElementById('speed').textContent = data.stats[5].base_stat;
+
+      // Add sprite image
+      let sprite = document.getElementById('sprite');
+      if (sprite) {
+        sprite.remove();
+      }
+      sprite = document.createElement('img');
+      sprite.id = 'sprite';
+      sprite.src = data.sprites.front_default;
+      document.getElementById('pokemon-info').appendChild(sprite);
+    })
+    .catch(error => {
+      alert(error.message);
+    });
+});
+
+
+** end of undefined **
+
+** start of undefined **
+
+body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        #app {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            cursor: pointer;
+        }
+        #pokemon-info {
+            margin-top: 20px;
+        }
+        #pokemon-info div {
+            margin: 5px 0;
+        }
+        img {
+            margin-top: 10px;
+        }
+
+** end of undefined **
+
